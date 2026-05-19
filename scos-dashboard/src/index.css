@@ -1,0 +1,146 @@
+@import 'leaflet/dist/leaflet.css';
+@import 'tailwindcss';
+@import 'leaflet-draw/dist/leaflet.draw.css';
+
+
+
+@theme {
+  --color-primary: #4b5320;    /* Army olive drab */
+  --color-primary-dark: #3a4018;
+  --color-secondary: #6b4f3c;   /* Earth brown */
+  --color-secondary-dark: #4f3a2b;
+  --color-tertiary: #2f4f4f;    /* Dark slate */
+  --color-background: #2e3b2e;  /* Dark green-gray */
+  --color-background-light: #3f4f3f;
+  --color-text: #e0e0c0;        /* Light tan */
+  --color-text-dark: #b0a080;
+  --color-accent: #8b7d6b;       /* Taupe */
+  --color-border: #5a5a3e;
+  --color-success: #556b2f;
+  --color-warning: #8b5a2b;
+  --color-danger: #8b3a3a;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--color-background-light);
+  border-right: 1px solid var(--color-border);
+  width: 250px;
+  transition: width 0.3s;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: var(--color-primary-dark);
+  border-left-color: var(--color-accent);
+}
+
+.sidebar-link.active {
+  background-color: var(--color-primary);
+  border-left-color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Content area */
+.content-area {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Military card */
+.military-card {
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Obstacle / unit icons (unchanged) */
+.obstacle-icon {
+  background-color: rgba(20, 30, 20, 0.7);
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  border: 2px solid #8b7d6b;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.obstacle-icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px #4b5320;
+  border-color: #e0e0c0;
+}
+
+.obstacle-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(2px 2px 2px black);
+}
+
+.military-marker {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.military-marker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.unit-icon {
+  border-radius: 20%;
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  border: 2px solid #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+}
+
+.unit-icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px #4b5320;
+  border-color: #e0e0c0;
+}
+
+.unit-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.8));
+}

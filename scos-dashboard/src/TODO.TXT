@@ -1,0 +1,109 @@
+1. Enhanced Terrain Analysis
+We’ll add new functions to terrain.py to compute additional layers:
+
+a. Terrain Roughness
+Measures local elevation variability (standard deviation within a moving window). High roughness indicates difficult terrain that might channel movement.
+
+python
+def compute_roughness(elev_grid: np.ndarray, window_size: int = 3) -> np.ndarray:
+    from scipy.ndimage import generic_filter
+    def std_filter(values):
+        return np.std(values)
+    return generic_filter(elev_grid, std_filter, size=window_size)
+b. Distance to Features (Roads, Water, etc.)
+We already have OSM features. We can compute Euclidean distance to a specific feature type (e.g., highway) and normalize it.
+
+python
+def distance_to_feature(bounds, grid_size, feature_filter: callable):
+    # rasterize features with a distance transform
+    # return grid of distances (meters)
+c. Path Planning (Least‑Cost Path)
+Use the impedance grid to find the least‑cost path from a start point (enemy) to an end point (objective). The end point could be the selected area center or the friendly position.
+
+python
+def least_cost_path(impedance_grid, start, end, grid_size, bounds):
+    # Use Dijkstra or A* on grid cells (or use a library like scikit‑image)
+    # Return a mask of cells that lie on the path
+2. Doctrinal Obstacle Generation Enhancements
+We’ll rewrite generate_doctrinal_obstacles to use a placement probability map that combines:
+
+Terrain suitability for each obstacle type.
+
+Enemy movement probability (corridor + least‑cost path).
+
+Doctrinal effect modifiers.
+
+Relative location masks.
+
+a. Terrain Suitability for Obstacle Types
+We’ll define a function that returns a suitability score (0–1) for a given obstacle type based on terrain attributes:
+
+python
+def terrain_suitability(obstacle_code: str, impedance: np.ndarray, slope: np.ndarray, landcover: np.ndarray) -> np.ndarray:
+    """
+    Returns a grid of suitability (0-1) for placing this obstacle type.
+    """
+    # Example rules:
+    # - Tank ditch (OBBT): best on flat, open terrain (low impedance)
+    # - Wire (OBWL): effective in forests, moderate impedance
+    # - Mines (OMP): any terrain, but better on open (to be effective)
+    # Adjust based on doctrinal knowledge
+b. Enemy Movement Probability
+We’ll combine:
+
+Corridor (existing cone) – simple directional prediction.
+
+Least‑cost path from enemy to objective – use impedance grid to find path(s).
+
+Optionally, create a heatmap of many paths (e.g., by adding Gaussian noise to start/end points) to get a probability distribution.
+
+python
+def enemy_movement_probability(bounds, grid_size, enemy_pos, objective_pos, impedance, num_paths=10) -> np.ndarray:
+    # compute one or more paths, accumulate counts to create probability map
+    prob_map = np.zeros((grid_size, grid_size))
+    # ... path finding
+    return prob_map
+c. Doctrinal Modifiers
+Effect (block, turn, fix, disrupt) will scale the suitability or the probability map.
+
+Relative location (avenue of approach, engagement area, etc.) can be used to mask or multiply weights in specific regions.
+
+d. Final Probability Map
+Combine all factors:
+
+python
+probability = (terrain_suitability ** α) * (enemy_prob ** β) * (effect_weight) * (location_mask)
+where α, β are tunable exponents.
+
+e. Obstacle Type Selection
+We already have select_obstacle_for_target. We can expand it to also consider the local suitability map:
+
+For each candidate obstacle type, compute its suitability at the candidate location.
+
+Choose a type with probability proportional to suitability.
+
+f. Placement Algorithm
+We’ll use the probability map as an intensity function for a point process (Poisson or Strauss) as before, but now the probability map is not uniform – it’s derived from tactical factors.
+
+3. New Parameters from Frontend
+We need the frontend to provide:
+
+Objective position (where enemy is heading) – we could assume it's the center of the selected area, or the user could place a “objective” marker.
+
+Friendly positions – not yet used, but could be added.
+
+Desired avenue of approach – already passed as relativeLocation but we can use it to focus the probability map.
+
+4. Implementation Steps (Prioritized)
+Add terrain roughness and distance to features to terrain.py.
+
+Implement least‑cost path using skimage.graph or networkx. (We can use a simple Dijkstra on the grid with 8‑neighbor connectivity.)
+
+Create terrain suitability function for the most common obstacle types.
+
+Modify generate_doctrinal_obstacles to compute a probability map using the new factors.
+
+Test with sample data and adjust weights.
+
+5. Example Code Skeleton
+I’ll provide the new functions in terrain.py and the updated doctrinal_generator.py. Let me know if you want me to write the full code or start with a specific part.
