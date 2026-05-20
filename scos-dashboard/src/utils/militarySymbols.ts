@@ -118,7 +118,7 @@ export function createObstacleSymbol(typeCode: ObstacleTypeCode): string | null 
 function createSimpleObstacleSVG(typeCode: ObstacleTypeCode): string {
   // Pattern based on MIL-STD-2525 tactical graphics for obstacles
   let pattern = '';
-  const color = '#C0B080'; // Tan/khaki color for obstacles
+  const color = 'rgb(128,224,255)'; // Light blue - matching unit friendly color
   
   // ============================================================
   // WIRE OBSTACLES - Lines/ wire obstacles
