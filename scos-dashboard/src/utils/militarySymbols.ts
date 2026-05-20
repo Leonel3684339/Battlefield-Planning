@@ -116,164 +116,203 @@ export function createObstacleSymbol(typeCode: ObstacleTypeCode): string | null 
 }
 
 function createSimpleObstacleSVG(typeCode: ObstacleTypeCode): string {
-  // Pattern based on obstacle type - matching MIL-STD-2525 tactical graphics style
+  // Pattern based on MIL-STD-2525 tactical graphics for obstacles
   let pattern = '';
-  const color = '#E0E0C0'; // Tan/sand color for obstacles
+  const color = '#C0B080'; // Tan/khaki color for obstacles
   
-  // Wire obstacles - straight lines with specific styling
+  // ============================================================
+  // WIRE OBSTACLES - Lines/ wire obstacles
+  // ============================================================
   if (typeCode === 'OBWL' || typeCode === 'OBW') {
-    // Low wire - single line with posts
-    pattern = `<line x1="10" y1="25" x2="40" y2="25" stroke="black" stroke-width="2"/>
-    <line x1="10" y1="25" x2="10" y2="15" stroke="black" stroke-width="1.5"/>
-    <line x1="25" y1="25" x2="25" y2="18" stroke="black" stroke-width="1.5"/>
-    <line x1="40" y1="25" x2="40" y2="15" stroke="black" stroke-width="1.5"/>`;
+    // LOW WIRE - Single line with posts (front view)
+    // MIL-STD-2525: G*GLL*WI (Low Wire)
+    pattern = `<line x1="8" y1="25" x2="42" y2="25" stroke="black" stroke-width="2"/>
+    <line x1="12" y1="25" x2="12" y2="35" stroke="black" stroke-width="2"/>
+    <line x1="25" y1="25" x2="25" y2="35" stroke="black" stroke-width="2"/>
+    <line x1="38" y1="25" x2="38" y2="35" stroke="black" stroke-width="2"/>`;
   } else if (typeCode === 'OBWH') {
-    // High wire - higher line with taller posts
-    pattern = `<line x1="10" y1="22" x2="40" y2="22" stroke="black" stroke-width="2"/>
-    <line x1="10" y1="22" x2="10" y2="10" stroke="black" stroke-width="1.5"/>
-    <line x1="25" y1="22" x2="25" y2="10" stroke="black" stroke-width="1.5"/>
-    <line x1="40" y1="22" x2="40" y2="10" stroke="black" stroke-width="1.5"/>
-    <line x1="10" y1="22" x2="40" y2="22" stroke="black" stroke-width="1.5" stroke-dasharray="4,2"/>`;
+    // HIGH WIRE - Wire at top with posts
+    pattern = `<line x1="8" y1="18" x2="42" y2="18" stroke="black" stroke-width="2"/>
+    <line x1="8" y1="18" x2="8" y2="38" stroke="black" stroke-width="2"/>
+    <line x1="25" y1="18" x2="25" y2="38" stroke="black" stroke-width="2"/>
+    <line x1="42" y1="18" x2="42" y2="38" stroke="black" stroke-width="2"/>
+    <line x1="8" y1="18" x2="42" y2="18" stroke="black" stroke-width="1.5" stroke-dasharray="4,3"/>`;
   } else if (typeCode === 'OBWC') {
-    // Concertina - spiral/coil pattern
-    pattern = `<ellipse cx="25" cy="25" rx="10" ry="5" fill="none" stroke="black" stroke-width="2"/>
-    <ellipse cx="25" cy="25" rx="6" ry="3" fill="none" stroke="black" stroke-width="1.5"/>
-    <circle cx="18" cy="25" r="2" fill="black"/>
-    <circle cx="32" cy="25" r="2" fill="black"/>`;
+    // CONCERTINA - Spiral coil pattern (top view)
+    pattern = `<ellipse cx="25" cy="25" rx="12" ry="6" fill="none" stroke="black" stroke-width="2"/>
+    <ellipse cx="25" cy="25" rx="7" ry="3.5" fill="none" stroke="black" stroke-width="1.5"/>
+    <circle cx="16" cy="25" r="2.5" fill="black"/>
+    <circle cx="34" cy="25" r="2.5" fill="black"/>`;
   } else if (typeCode === 'OBWD') {
-    // Double apron - two parallel lines with crossbars
-    pattern = `<line x1="10" y1="20" x2="40" y2="20" stroke="black" stroke-width="2"/>
-    <line x1="10" y1="30" x2="40" y2="30" stroke="black" stroke-width="2"/>
-    <line x1="15" y1="20" x2="15" y2="30" stroke="black" stroke-width="1.5"/>
-    <line x1="25" y1="20" x2="25" y2="30" stroke="black" stroke-width="1.5"/>
-    <line x1="35" y1="20" x2="35" y2="30" stroke="black" stroke-width="1.5"/>`;
+    // DOUBLE APRON - Two horizontal lines with diagonal cross braces
+    pattern = `<line x1="8" y1="18" x2="42" y2="18" stroke="black" stroke-width="2"/>
+    <line x1="8" y1="32" x2="42" y2="32" stroke="black" stroke-width="2"/>
+    <line x1="12" y1="18" x2="12" y2="32" stroke="black" stroke-width="1.5"/>
+    <line x1="25" y1="18" x2="25" y2="32" stroke="black" stroke-width="1.5"/>
+    <line x1="38" y1="18" x2="38" y2="32" stroke="black" stroke-width="1.5"/>`;
   } else if (typeCode === 'OBWT') {
-    // Triple concertina
-    pattern = `<ellipse cx="20" cy="22" rx="8" ry="4" fill="none" stroke="black" stroke-width="1.5"/>
-    <ellipse cx="30" cy="22" rx="8" ry="4" fill="none" stroke="black" stroke-width="1.5"/>
-    <ellipse cx="25" cy="30" rx="8" ry="4" fill="none" stroke="black" stroke-width="1.5"/>
-    <line x1="12" y1="18" x2="38" y2="36" stroke="black" stroke-width="1" stroke-dasharray="3,2"/>`;
+    // TRIPLE CONCERTINA - Three coils stacked
+    pattern = `<ellipse cx="20" cy="20" rx="10" ry="5" fill="none" stroke="black" stroke-width="1.5"/>
+    <ellipse cx="30" cy="20" rx="10" ry="5" fill="none" stroke="black" stroke-width="1.5"/>
+    <ellipse cx="25" cy="30" rx="12" ry="6" fill="none" stroke="black" stroke-width="1.5"/>
+    <line x1="10" y1="16" x2="40" y2="38" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
     
-  // Minefields - scattered circles representing mines
+  // ============================================================
+  // MINEFIELDS - Tactical graphic area with internal details
+  // ============================================================
   } else if (typeCode === 'OMP' || typeCode === 'OMPA') {
-    // Antitank mine - rectangular with center detail
-    pattern = `<rect x="18" y="20" width="14" height="10" fill="black" stroke="black" stroke-width="1"/>
-    <rect x="20" y="22" width="10" height="6" fill="none" stroke="white" stroke-width="1"/>
-    <circle cx="25" cy="25" r="2" fill="white"/>`;
-  } else if (typeCode === 'OMPB' || typeCode === 'OMP' || typeCode.startsWith('OM')) {
-    // Generic minefield - scattered mines
-    pattern = `<rect x="15" y="15" width="6" height="4" fill="black"/>
-    <rect x="30" y="18" width="6" height="4" fill="black"/>
-    <rect x="22" y="28" width="6" height="4" fill="black"/>
-    <rect x="38" y="32" width="6" height="4" fill="black"/>
-    <rect x="12" y="35" width="6" height="4" fill="black"/>
-    <rect x="28" y="12" width="6" height="4" fill="black"/>`;
-  } else if (typeCode === 'OMTS') {
-    // Scatterable mines - row pattern
-    pattern = `<circle cx="12" cy="25" r="3" fill="black"/>
-    <circle cx="20" cy="25" r="3" fill="black"/>
-    <circle cx="28" cy="25" r="3" fill="black"/>
-    <circle cx="36" cy="25" r="3" fill="black"/>
-    <line x1="10" y1="32" x2="10" y2="40" stroke="black" stroke-width="1.5"/>
-    <line x1="25" y1="32" x2="25" y2="40" stroke="black" stroke-width="1.5"/>`;
+    // ANTITANK MINEFIELD - Rectangular boundary with AT mine symbols inside
+    // MIL-STD-2525: G*GMF*AT (AT Minefield)
+    // Shows rectangular boundary, antitank mines (rectangular with diagonal), density pattern
+    pattern = `<rect x="10" y="15" width="30" height="20" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="14" y="19" width="6" height="4" fill="black"/>
+    <rect x="24" y="19" width="6" height="4" fill="black"/>
+    <rect x="34" y="19" width="6" height="4" fill="black"/>
+    <rect x="14" y="28" width="6" height="4" fill="black"/>
+    <rect x="24" y="28" width="6" height="4" fill="black"/>
+    <rect x="34" y="28" width="6" height="4" fill="black"/>
+    <line x1="10" y1="15" x2="10" y2="12" stroke="black" stroke-width="1.5"/>
+    <line x1="40" y1="15" x2="40" y2="12" stroke="black" stroke-width="1.5"/>`;
+  } else if (typeCode === 'OMP' || typeCode === 'OMPB') {
+    // ANTIPERSONNEL MINEFIELD - Smaller scattered mines
+    pattern = `<rect x="10" y="15" width="30" height="20" fill="none" stroke="black" stroke-width="2"/>
+    <circle cx="15" cy="22" r="2" fill="black"/>
+    <circle cx="23" cy="20" r="2" fill="black"/>
+    <circle cx="31" cy="22" r="2" fill="black"/>
+    <circle cx="19" cy="28" r="2" fill="black"/>
+    <circle cx="27" cy="30" r="2" fill="black"/>
+    <circle cx="35" cy="28" r="2" fill="black"/>`;
+  } else if (typeCode === 'OMS' || typeCode === 'OMTS') {
+    // SCATTERABLE MINEFIELD - Row pattern with launch indicators
+    pattern = `<rect x="8" y="15" width="34" height="12" fill="none" stroke="black" stroke-width="2"/>
+    <circle cx="14" cy="21" r="2.5" fill="black"/>
+    <circle cx="25" cy="21" r="2.5" fill="black"/>
+    <circle cx="36" cy="21" r="2.5" fill="black"/>
+    <path d="M10,35 L10,42 M25,35 L25,42 M40,35 L40,42" stroke="black" stroke-width="1.5"/>`;
   } else if (typeCode === 'OMD') {
-    // AT ditch - continuous line with hatched marks
-    pattern = `<path d="M10,40 L15,20 L25,20 L30,40" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="17" y1="25" x2="17" y2="35" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="22" y1="25" x2="22" y2="38" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="27" y1="25" x2="27" y2="35" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
+    // ANTITANK DITCH/AXIS OF ADVANCE - V-shaped ditch with hatching
+    pattern = `<path d="M8,42 L15,18 L35,18 L42,42" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="16" y1="32" x2="16" y2="38" stroke="black" stroke-width="1"/>
+    <line x1="21" y1="32" x2="21" y2="38" stroke="black" stroke-width="1"/>
+    <line x1="26" y1="32" x2="26" y2="38" stroke="black" stroke-width="1"/>
+    <line x1="31" y1="32" x2="31" y2="38" stroke="black" stroke-width="1"/>
+    <line x1="14" y1="30" x2="18" y2="22" stroke="black" stroke-width="1"/>
+    <line x1="26" y1="30" x2="22" y2="22" stroke="black" stroke-width="1"/>
+    <line x1="38" y1="30" x2="34" y2="22" stroke="black" stroke-width="1"/>`;
+  } else if (typeCode.startsWith('OM')) {
+    // GENERIC MINEFIELD - Default rectangular mine pattern
+    pattern = `<rect x="10" y="12" width="30" height="26" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="14" y="16" width="5" height="3" fill="black"/>
+    <rect x="28" y="16" width="5" height="3" fill="black"/>
+    <rect x="14" y="26" width="5" height="3" fill="black"/>
+    <rect x="28" y="26" width="5" height="3" fill="black"/>
+    <rect x="14" y="36" width="5" height="3" fill="black"/>
+    <rect x="28" y="36" width="5" height="3" fill="black"/>`;
     
-  // Barriers
+  // ============================================================
+  // BARRIERS - Physical obstacles
+  // ============================================================
   } else if (typeCode === 'OBBB') {
-    // Bunker - square with diagonal cross
-    pattern = `<rect x="15" y="15" width="20" height="20" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="15" y1="15" x2="35" y2="35" stroke="black" stroke-width="2"/>
-    <line x1="35" y1="15" x2="15" y2="35" stroke="black" stroke-width="2"/>`;
+    // BUNKER - Fortified position symbol
+    pattern = `<rect x="12" y="12" width="26" height="26" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="25" y1="12" x2="25" y2="38" stroke="black" stroke-width="2"/>
+    <line x1="12" y1="25" x2="38" y2="25" stroke="black" stroke-width="2"/>
+    <rect x="18" y="18" width="8" height="8" fill="black"/>`;
   } else if (typeCode === 'OBBT') {
-    // Tank ditch - V-shape trench
-    pattern = `<polyline points="10,40 25,20 40,40" fill="none" stroke="black" stroke-width="3"/>
-    <line x1="15" y1="35" x2="20" y2="28" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="20" y1="35" x2="25" y2="25" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="30" y1="35" x2="25" y2="25" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="35" y1="35" x2="30" y2="28" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
+    // TANK DITCH - V-shaped antitank ditch
+    pattern = `<polyline points="8,42 18,15 32,15 42,42" fill="none" stroke="black" stroke-width="3"/>
+    <line x1="15" y1="35" x2="18" y2="25" stroke="black" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <line x1="22" y1="35" x2="22" y2="25" stroke="black" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <line x1="29" y1="35" x2="32" y2="25" stroke="black" stroke-width="1.5" stroke-dasharray="2,2"/>`;
   } else if (typeCode === 'OBBC') {
-    // Crater - irregular circle
-    pattern = `<ellipse cx="25" cy="25" rx="12" ry="10" fill="none" stroke="black" stroke-width="2"/>
-    <path d="M18,22 Q25,18 32,22" fill="none" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
-    <path d="M18,28 Q25,32 32,28" fill="none" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
+    // CRATER - Irregular circular obstacle
+    pattern = `<ellipse cx="25" cy="25" rx="14" ry="12" fill="none" stroke="black" stroke-width="2.5"/>
+    <path d="M14,22 Q25,15 36,22" fill="none" stroke="black" stroke-width="1" stroke-dasharray="3,2"/>
+    <path d="M14,30 Q25,38 36,30" fill="none" stroke="black" stroke-width="1" stroke-dasharray="3,2"/>
+    <ellipse cx="25" cy="25" rx="5" ry="4" fill="none" stroke="black" stroke-width="1.5"/>`;
   } else if (typeCode === 'OBBLK' || typeCode === 'OBB') {
-    // Block - vertical barrier
-    pattern = `<rect x="15" y="18" width="6" height="18" fill="black"/>
-    <rect x="23" y="15" width="6" height="24" fill="black"/>
-    <rect x="31" y="20" width="6" height="14" fill="black"/>
-    <line x1="10" y1="12" x2="40" y2="12" stroke="black" stroke-width="2"/>
-    <line x1="10" y1="42" x2="40" y2="42" stroke="black" stroke-width="2"/>`;
+    // ROADBLOCK/ABATIS - Tree/wood barrier
+    pattern = `<rect x="8" y="8" width="8" height="34" fill="black"/>
+    <rect x="20" y="10" width="8" height="30" fill="black"/>
+    <rect x="32" y="8" width="8" height="34" fill="black"/>
+    <line x1="5" y1="6" x2="43" y2="6" stroke="black" stroke-width="2"/>
+    <line x1="5" y1="44" x2="43" y2="44" stroke="black" stroke-width="2"/>`;
   } else if (typeCode === 'OBBW' || typeCode === 'OBBR') {
-    // Wooden/Reinforced - timber pattern
-    pattern = `<line x1="18" y1="15" x2="18" y2="35" stroke="black" stroke-width="3"/>
-    <line x1="25" y1="15" x2="25" y2="35" stroke="black" stroke-width="3"/>
-    <line x1="32" y1="15" x2="32" y2="35" stroke="black" stroke-width="3"/>
-    <line x1="15" y1="20" x2="35" y2="20" stroke="black" stroke-width="2"/>
-    <line x1="15" y1="30" x2="35" y2="30" stroke="black" stroke-width="2"/>`;
+    // LOGICAL/REINFORCED - Timber framed structure
+    pattern = `<line x1="15" y1="12" x2="15" y2="38" stroke="black" stroke-width="3"/>
+    <line x1="25" y1="10" x2="25" y2="40" stroke="black" stroke-width="3"/>
+    <line x1="35" y1="12" x2="35" y2="38" stroke="black" stroke-width="3"/>
+    <line x1="10" y1="18" x2="40" y2="18" stroke="black" stroke-width="2"/>
+    <line x1="10" y1="32" x2="40" y2="32" stroke="black" stroke-width="2"/>`;
   } else if (typeCode === 'OBBD') {
-    // Demo - explosive charge symbol
-    pattern = `<circle cx="25" cy="25" r="8" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="25" y1="15" x2="25" y2="35" stroke="black" stroke-width="2"/>
-    <line x1="15" y1="25" x2="35" y2="25" stroke="black" stroke-width="2"/>
-    <line x1="18" y1="18" x2="32" y2="32" stroke="black" stroke-width="1.5"/>
-    <line x1="18" y1="32" x2="32" y2="18" stroke="black" stroke-width="1.5"/>`;
+    // DEMOLITION - Explosive charge symbol
+    pattern = `<circle cx="25" cy="25" r="12" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="25" y1="13" x2="25" y2="37" stroke="black" stroke-width="2"/>
+    <line x1="13" y1="25" x2="37" y2="25" stroke="black" stroke-width="2"/>
+    <line x1="16" y1="16" x2="34" y2="34" stroke="black" stroke-width="1.5"/>
+    <line x1="16" y1="34" x2="34" y2="16" stroke="black" stroke-width="1.5"/>`;
   } else if (typeCode === 'OBBH') {
-    // Hebco - hesco barrier
-    pattern = `<rect x="15" y="20" width="8" height="14" fill="none" stroke="black" stroke-width="2"/>
-    <rect x="27" y="20" width="8" height="14" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="23" y1="15" x2="23" y2="39" stroke="black" stroke-width="2"/>
-    <line x1="15" y1="27" x2="19" y2="27" stroke="black" stroke-width="1.5"/>
-    <line x1="31" y1="27" x2="35" y2="27" stroke="black" stroke-width="1.5"/>`;
+    // HESCO BARRIER - Collapsible mesh basket
+    pattern = `<rect x="10" y="15" width="10" height="20" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="22" y="15" width="10" height="20" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="34" y="15" width="10" height="20" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="15" y1="15" x2="15" y2="35" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="27" y1="15" x2="27" y2="35" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="39" y1="15" x2="39" y2="35" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
   } else if (typeCode === 'OBF') {
-    // Ford - crossed water marks
-    pattern = `<path d="M15,15 Q25,25 35,15" fill="none" stroke="blue" stroke-width="2"/>
-    <path d="M15,35 Q25,25 35,35" fill="none" stroke="blue" stroke-width="2"/>
-    <line x1="20" y1="20" x2="30" y2="30" stroke="brown" stroke-width="1.5"/>
-    <line x1="30" y1="20" x2="20" y2="30" stroke="brown" stroke-width="1.5"/>`;
+    // FORD/Shallow crossing - Water and riverbed marks
+    pattern = `<path d="M12,18 Q25,28 38,18" fill="none" stroke="blue" stroke-width="3"/>
+    <path d="M12,32 Q25,22 38,32" fill="none" stroke="blue" stroke-width="3"/>
+    <line x1="18" y1="22" x2="32" y2="32" stroke="brown" stroke-width="2"/>
+    <line x1="32" y1="22" x2="18" y2="32" stroke="brown" stroke-width="2"/>`;
   } else if (typeCode === 'OBCNL') {
-    // Canal - parallel water lines
-    pattern = `<line x1="12" y1="18" x2="12" y2="32" stroke="blue" stroke-width="3"/>
-    <line x1="38" y1="18" x2="38" y2="32" stroke="blue" stroke-width="3"/>
-    <line x1="12" y1="25" x2="38" y2="25" stroke="blue" stroke-width="1" stroke-dasharray="3,2"/>`;
+    // CANAL - Water channel with banks
+    pattern = `<line x1="10" y1="20" x2="10" y2="30" stroke="blue" stroke-width="4"/>
+    <line x1="40" y1="20" x2="40" y2="30" stroke="blue" stroke-width="4"/>
+    <line x1="10" y1="20" x2="40" y2="20" stroke="blue" stroke-width="1.5"/>
+    <line x1="10" y1="30" x2="40" y2="30" stroke="blue" stroke-width="1.5"/>
+    <line x1="10" y1="25" x2="40" y2="25" stroke="white" stroke-width="0.5" stroke-dasharray="4,2"/>`;
     
-  // Existing/Natural
+  // ============================================================
+  // EXISTING/NATURAL OBSTACLES
+  // ============================================================
   } else if (typeCode === 'OBE' || typeCode === 'OBES') {
-    // Existing/built-up area - building outlines
-    pattern = `<rect x="12" y="15" width="10" height="8" fill="none" stroke="black" stroke-width="1.5"/>
-    <rect x="26" y="15" width="12" height="8" fill="none" stroke="black" stroke-width="1.5"/>
-    <rect x="12" y="27" width="8" height="10" fill="none" stroke="black" stroke-width="1.5"/>
-    <rect x="24" y="27" width="14" height="10" fill="none" stroke="black" stroke-width="1.5"/>`;
+    // EXISTING/BUILT-UP AREA - Buildings and structures
+    pattern = `<rect x="8" y="12" width="12" height="10" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="24" y="10" width="14" height="10" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="8" y="26" width="8" height="12" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="22" y="26" width="16" height="12" fill="none" stroke="black" stroke-width="2"/>
+    <rect x="38" y="28" width="8" height="10" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="20" y1="12" x2="20" y2="38" stroke="black" stroke-width="1"/>`;
   } else if (typeCode === 'OBT') {
-    // Tunnel - arc with lines
-    pattern = `<path d="M15,35 Q25,15 35,35" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="18" y1="32" x2="18" y2="38" stroke="black" stroke-width="1.5"/>
-    <line x1="25" y1="25" x2="25" y2="38" stroke="black" stroke-width="1.5"/>
-    <line x1="32" y1="32" x2="32" y2="38" stroke="black" stroke-width="1.5"/>`;
+    // TUNNEL - Underground passage
+    pattern = `<path d="M15,38 Q25,12 35,38" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="20" y1="34" x2="20" y2="40" stroke="black" stroke-width="2"/>
+    <line x1="25" y1="28" x2="25" y2="40" stroke="black" stroke-width="2"/>
+    <line x1="30" y1="34" x2="30" y2="40" stroke="black" stroke-width="2"/>`;
   } else if (typeCode === 'OBD') {
-    // Defile - mountain peaks
-    pattern = `<polygon points="15,35 20,20 25,35" fill="none" stroke="black" stroke-width="2"/>
-    <polygon points="22,35 28,15 34,35" fill="none" stroke="black" stroke-width="2"/>
-    <polygon points="30,35 36,25 42,35" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="20" y1="25" x2="28" y2="20" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
+    // DEFILE/DITCH - Natural ditch/obstacle
+    pattern = `<polygon points="10,38 18,15 26,38" fill="none" stroke="black" stroke-width="2.5"/>
+    <polygon points="24,38 32,10 40,38" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="18" y1="25" x2="26" y2="28" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="32" y1="22" x2="40" y2="28" stroke="black" stroke-width="1" stroke-dasharray="2,2"/>`;
   } else if (typeCode.startsWith('OBER') || typeCode.startsWith('OBEW') || typeCode.startsWith('OBEF')) {
-    // Enhanced - with radar/weapon symbols
-    pattern = `<circle cx="25" cy="25" r="10" fill="none" stroke="black" stroke-width="2"/>
-    <line x1="25" y1="15" x2="25" y2="35" stroke="black" stroke-width="1.5"/>
-    <line x1="15" y1="25" x2="35" y2="25" stroke="black" stroke-width="1.5"/>
-    <circle cx="25" cy="25" r="3" fill="black"/>`;
+    // ENHANCED POSITION - Defended location with weapons
+    pattern = `<circle cx="25" cy="25" r="14" fill="none" stroke="black" stroke-width="2.5"/>
+    <line x1="25" y1="11" x2="25" y2="39" stroke="black" stroke-width="2"/>
+    <line x1="11" y1="25" x2="39" y2="25" stroke="black" stroke-width="2"/>
+    <circle cx="25" cy="25" r="5" fill="black"/>
+    <line x1="25" y1="6" x2="22" y2="10" stroke="black" stroke-width="1.5"/>
+    <line x1="25" y1="6" x2="28" y2="10" stroke="black" stroke-width="1.5"/>`;
   } else {
-    // Generic obstacle - X mark
-    pattern = `<line x1="18" y1="18" x2="32" y2="32" stroke="black" stroke-width="2"/>
+    // GENERIC OBSTACLE - Default X mark
+    pattern = `<rect x="10" y="10" width="30" height="30" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="18" y1="18" x2="32" y2="32" stroke="black" stroke-width="2"/>
     <line x1="32" y1="18" x2="18" y2="32" stroke="black" stroke-width="2"/>`;
   }
   
   return `<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="25" cy="25" r="20" fill="${color}" stroke="black" stroke-width="2"/>
+    <rect x="5" y="5" width="40" height="40" fill="${color}" stroke="black" stroke-width="2"/>
     ${pattern}
   </svg>`;
 }
