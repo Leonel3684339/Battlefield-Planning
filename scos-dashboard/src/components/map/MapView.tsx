@@ -424,8 +424,8 @@ export const MapView = forwardRef<
         <Polyline
           positions={
             losLine.geometry.coordinates.map(
-              ([lng, lat]) => [lat, lng]
-            )
+              ([lng, lat]): [number, number] => [lat, lng]
+            ) as [number, number][]
           }
           color={losVisible ? "lime" : "red"}
           weight={4}
