@@ -526,9 +526,10 @@ export const MapView = forwardRef<
 
                 <button
                   className="deleteMarker"
-                  onClick={() =>
-                    handleDeleteObstacle(obs.id)
-                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteObstacle(obs.id);
+                  }}
                 >
                   Delete
                 </button>
@@ -577,9 +578,10 @@ export const MapView = forwardRef<
 
               <button
                 className="deleteMarker"
-                onClick={() =>
-                  handleDeleteUnit(unit.id)
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteUnit(unit.id);
+                }}
               >
                 Delete
               </button>
