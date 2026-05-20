@@ -82,12 +82,13 @@ function createSimpleUnitSVG(
   if (echelon && echelon !== 'none') {
     const dots: Record<string, number> = { squad: 1, section: 2, platoon: 3 };
     const barCounts: Record<string, number> = { company: 1, battalion: 2, regiment: 3 };
-    if (dots[echelon]) {
-      for (let i = 0; i < dots[echelon]; i++) {
+    const echelonStr = String(echelon);
+    if (dots[echelonStr]) {
+      for (let i = 0; i < dots[echelonStr]; i++) {
         echelonIndicator += `<circle cx="${40 + (i * 10)}" cy="8" r="3" fill="black"/>`;
       }
-    } else if (barCounts[echelon]) {
-      for (let i = 0; i < barCounts[echelon]; i++) {
+    } else if (barCounts[echelonStr]) {
+      for (let i = 0; i < barCounts[echelonStr]; i++) {
         echelonIndicator += `<rect x="${35 + (i * 10)}" y="3" width="6" height="8" fill="black"/>`;
       }
     }
